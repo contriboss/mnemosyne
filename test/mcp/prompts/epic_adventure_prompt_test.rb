@@ -6,7 +6,7 @@ class EpicAdventurePromptTest < ActiveSupport::TestCase
   def test_prompt_with_defaults
     prompt = EpicAdventurePrompt.new(
       hero_name: "Marissa",
-      adventure_type: "mystery",
+      adventure_type: "mystery"
     )
 
     assert prompt.valid?

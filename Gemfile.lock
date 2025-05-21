@@ -53,6 +53,36 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
     ast (2.4.3)
+    async (2.24.0)
+      console (~> 1.29)
+      fiber-annotation
+      io-event (~> 1.9)
+      metrics (~> 0.12)
+      traces (~> 0.15)
+    async-container (0.24.0)
+      async (~> 2.22)
+    async-container-supervisor (0.5.1)
+      async-container (~> 0.22)
+      async-service
+      io-endpoint
+      memory-leak (~> 0.5)
+    async-http (0.89.0)
+      async (>= 2.10.2)
+      async-pool (~> 0.9)
+      io-endpoint (~> 0.14)
+      io-stream (~> 0.6)
+      metrics (~> 0.12)
+      protocol-http (~> 0.49)
+      protocol-http1 (~> 0.30)
+      protocol-http2 (~> 0.22)
+      traces (~> 0.10)
+    async-http-cache (0.4.5)
+      async-http (~> 0.56)
+    async-pool (0.10.3)
+      async (>= 1.25)
+    async-service (0.13.0)
+      async
+      async-container (~> 0.16)
     base64 (0.2.0)
     bcrypt_pbkdf (1.1.1)
     benchmark (0.4.0)
@@ -62,28 +92,81 @@ GEM
     brakeman (7.0.2)
       racc
     builder (3.3.0)
+    closure_tree (7.4.0)
+      activerecord (>= 4.2.10)
+      with_advisory_lock (>= 4.0.0)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.3)
+    console (1.30.2)
+      fiber-annotation
+      fiber-local (~> 1.1)
+      json
     crass (1.0.6)
     date (3.4.1)
     debug (1.10.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    diagram (0.3.4)
+      dry-equalizer (>= 0.2)
+      dry-struct (>= 1.6.0)
+      dry-types (>= 1.0)
+      json
+      zeitwerk (>= 2.6)
     dotenv (3.1.8)
-    drb (2.2.1)
+    drb (2.2.3)
+    dry-core (1.1.0)
+      concurrent-ruby (~> 1.0)
+      logger
+      zeitwerk (~> 2.6)
+    dry-equalizer (0.3.0)
+    dry-inflector (1.2.0)
+    dry-logic (1.6.0)
+      bigdecimal
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.1)
+      zeitwerk (~> 2.6)
+    dry-struct (1.8.0)
+      dry-core (~> 1.1)
+      dry-types (~> 1.8, >= 1.8.2)
+      ice_nine (~> 0.11)
+      zeitwerk (~> 2.6)
+    dry-types (1.8.2)
+      bigdecimal (~> 3.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.0)
+      dry-inflector (~> 1.0)
+      dry-logic (~> 1.4)
+      zeitwerk (~> 2.6)
     ed25519 (1.4.0)
+    erb (5.0.1)
     erubi (1.13.1)
-    et-orbi (1.2.11)
-      tzinfo
+    falcon (0.51.1)
+      async
+      async-container (~> 0.20)
+      async-container-supervisor (~> 0.5.0)
+      async-http (~> 0.75)
+      async-http-cache (~> 0.4)
+      async-service (~> 0.10)
+      bundler
+      localhost (~> 1.1)
+      openssl (~> 3.0)
+      protocol-http (~> 0.31)
+      protocol-rack (~> 0.7)
+      samovar (~> 2.3)
+    fiber-annotation (0.2.0)
+    fiber-local (1.1.0)
+      fiber-storage
+    fiber-storage (1.0.1)
     foreman (0.88.1)
-    fugit (1.11.1)
-      et-orbi (~> 1, >= 1.2.11)
-      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    ice_nine (0.11.2)
     io-console (0.8.0)
+    io-endpoint (0.15.2)
+    io-event (1.10.0)
+    io-stream (0.6.1)
     irb (1.15.2)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
@@ -104,10 +187,17 @@ GEM
       zeitwerk (>= 2.6.18, < 3.0)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
+    localhost (1.5.0)
     logger (1.7.0)
     loofah (2.24.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
+    mapping (1.1.3)
+    memory-leak (0.5.2)
+    mermaid (0.0.2)
+      diagram (>= 0.3.2)
+      zeitwerk
+    metrics (0.12.2)
     minitest (5.25.5)
     msgpack (1.8.0)
     multi_json (1.15.0)
@@ -117,6 +207,8 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-ssh (7.3.0)
     nio4r (2.7.4)
+    no_fly_list (0.7.0)
+      activerecord (>= 7.2)
     nokogiri (1.18.8-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.18.8-aarch64-linux-musl)
@@ -131,6 +223,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-linux-musl)
       racc (~> 1.4)
+    openssl (3.3.0)
     ostruct (0.6.1)
     parallel (1.27.0)
     parser (3.3.8.0)
@@ -141,12 +234,21 @@ GEM
       prettyprint
     prettyprint (0.2.0)
     prism (1.4.0)
+    protocol-hpack (1.5.1)
+    protocol-http (0.50.1)
+    protocol-http1 (0.34.0)
+      protocol-http (~> 0.22)
+    protocol-http2 (0.22.1)
+      protocol-hpack (~> 1.4)
+      protocol-http (~> 0.47)
+    protocol-rack (0.13.0)
+      protocol-http (~> 0.43)
+      rack (>= 1.0)
     psych (5.2.6)
       date
       stringio
     puma (6.6.0)
       nio4r (~> 2.0)
-    raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.15)
     rack-session (2.1.1)
@@ -156,7 +258,7 @@ GEM
       rack (>= 1.3)
     rackup (2.2.1)
       rack (>= 3)
-    rails-dom-testing (2.2.0)
+    rails-dom-testing (2.3.0)
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
@@ -173,14 +275,13 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
-    rbs (3.9.4)
-      logger
-    rdoc (6.13.1)
+    rdoc (6.14.0)
+      erb
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
     reline (0.6.1)
       io-console (~> 0.5)
-    rubocop (1.75.6)
+    rubocop (1.75.7)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -208,14 +309,10 @@ GEM
       rubocop (>= 1.72)
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
-    ruby-lsp (0.23.20)
-      language_server-protocol (~> 3.17.0)
-      prism (>= 1.2, < 2.0)
-      rbs (>= 3, < 4)
-      sorbet-runtime (>= 0.5.10782)
-    ruby-lsp-rails (0.4.3)
-      ruby-lsp (>= 0.23.18, < 0.24.0)
     ruby-progressbar (1.13.0)
+    samovar (2.3.0)
+      console (~> 1.0)
+      mapping (~> 1.0)
     securerandom (0.4.1)
     solid_cable (3.0.8)
       actioncable (>= 7.2)
@@ -226,14 +323,6 @@ GEM
       activejob (>= 7.2)
       activerecord (>= 7.2)
       railties (>= 7.2)
-    solid_queue (1.1.5)
-      activejob (>= 7.1)
-      activerecord (>= 7.1)
-      concurrent-ruby (>= 1.3.1)
-      fugit (~> 1.11.0)
-      railties (>= 7.1)
-      thor (~> 1.3.1)
-    sorbet-runtime (0.5.12115)
     sshkit (1.24.0)
       base64
       logger
@@ -248,6 +337,7 @@ GEM
     thruster (0.1.13-arm64-darwin)
     thruster (0.1.13-x86_64-linux)
     timeout (0.4.3)
+    traces (0.15.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
@@ -259,7 +349,10 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.7.2)
+    with_advisory_lock (5.1.0)
+      activerecord (>= 6.1)
+      zeitwerk (>= 2.6)
+    zeitwerk (2.7.3)
 
 PLATFORMS
   aarch64-linux
@@ -279,18 +372,19 @@ DEPENDENCIES
   activerecord (~> 8.0.2)
   bootsnap
   brakeman
+  closure_tree
   debug
+  falcon
   foreman
   kamal
+  mermaid
+  no_fly_list
   pg
   puma
   railties (~> 8.0.2)
   rubocop-rails-omakase
-  ruby-lsp
-  ruby-lsp-rails
   solid_cable
   solid_cache
-  solid_queue
   thruster
   tzinfo-data
 
