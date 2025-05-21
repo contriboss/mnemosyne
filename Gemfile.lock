@@ -201,6 +201,8 @@ GEM
     minitest (5.25.5)
     msgpack (1.8.0)
     multi_json (1.15.0)
+    neighbor (0.5.2)
+      activerecord (>= 7)
     net-scp (4.1.0)
       net-ssh (>= 2.6.5, < 8.0.0)
     net-sftp (4.0.0)
@@ -378,6 +380,7 @@ DEPENDENCIES
   foreman
   kamal
   mermaid
+  neighbor
   no_fly_list
   pg
   puma

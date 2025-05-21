@@ -49,5 +49,7 @@ group :development, :test do
   gem "foreman"
 end
 
+gem 'neighbor'
+
 # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
 gem "rubocop-rails-omakase", require: false
