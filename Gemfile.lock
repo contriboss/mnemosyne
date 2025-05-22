@@ -165,7 +165,7 @@ GEM
     ice_nine (0.11.2)
     io-console (0.8.0)
     io-endpoint (0.15.2)
-    io-event (1.10.0)
+    io-event (1.10.1)
     io-stream (0.6.1)
     irb (1.15.2)
       pp (>= 0.6.0)
@@ -232,6 +232,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
+    pgvector (0.3.2)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -383,6 +384,7 @@ DEPENDENCIES
   neighbor
   no_fly_list
   pg
+  pgvector
   puma
   railties (~> 8.0.2)
   rubocop-rails-omakase
